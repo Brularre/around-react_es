@@ -1,86 +1,102 @@
 /* MARKUP SELECTORS */
 
-const addBtn = document.querySelector(".profile__add-btn");
-const editBtn = document.querySelector(".profile__edit-btn");
-const avatarBtn = document.querySelector(".profile__avatar-wrapper");
-const profileName = document.querySelector(".profile__name");
-const profileAbout = document.querySelector(".profile__about");
-const profileAvatar = document.querySelector(".profile__avatar");
-const cardsContainerSelector = ".elements";
-const cardTemplate = document
-  .querySelector("#template_cards")
-  .content.querySelector(".elements__card");
+/* PROPS OBJECTS */
 
-/* POPUP SELECTORS */
-
-const formList = Array.from(document.forms);
-const deleteCardSelector = "popup__delete-card";
-const imagePopupSelector = "popup__image";
-const addFormSelector = "popup__add-form";
-const editFormSelector = "popup__edit-profile";
-const avatarFormSelector = "popup__edit-avatar";
-
-const placeName = document.querySelector("#place-name");
-const placeLink = document.querySelector("#place-link");
-const formName = document.querySelector("#profile-name");
-const formAbout = document.querySelector("#profile-about");
-
-/* CONFIG OBJECTS */
-
-const cardSelectors = {
-  cardName: ".elements__name",
-  cardImage: ".elements__image",
-  cardLike: ".elements__like-btn",
-  cardNumber: ".elements__like-number",
-  cardDelete: ".elements__del-btn",
-  cardPopup: "#popup__image",
-  cardPopupCaption: ".popup__image-caption",
-  cardPopupImage: ".popup__image",
+const deleteCardProps = {
+  name: "popup__delete-card",
+  title: "¿Estás seguro/a?",
+  submit: "Sí",
 };
 
-const validationConfig = {
-  formSelector: ".popup",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__submit-btn",
-  inactiveButtonClass: "popup__submit-btn_inactive",
-  inputErrorClass: "popup__input_error",
-  errorClass: "popup__error-msg",
+const addPlaceProps = {
+  name: "popup__add-form",
+  title: "Nuevo Lugar",
+  submit: "Crea",
+  inputs: (
+    <>
+      <div className="popup__input-container">
+        <input
+          type="text"
+          name="place-name"
+          id="place-name"
+          className="popup__input"
+          placeholder="Título"
+          minLength="2"
+          maxLength="30"
+          required
+        />
+        <span className="popup__error-place-name"></span>
+      </div>
+      <div className="popup__input-container">
+        <input
+          type="url"
+          name="place-link"
+          id="place-link"
+          className="popup__input"
+          placeholder="Enlace a la imagen"
+          required
+        />
+        <span className="popup__error-place-link"></span>
+      </div>
+    </>
+  ),
 };
 
-const apiConfig = {
-  baseUrl: "https://around.nomoreparties.co/v1/web_es_cohort_02",
-  headers: {
-    authorization: "3a5f7fd0-4f77-4f83-8848-cbfc8ddc2f6c",
-    "Content-Type": "application/json; charset=UTF-8",
-  },
+const editProfileProps = {
+  name: "popup__edit-profile",
+  title: "Editar Perfil",
+  submit: "Guardar",
+  inputs: (
+    <>
+      <div className="popup__input-container">
+        <input
+          type="text"
+          name="profile-name"
+          id="profile-name"
+          className="popup__input"
+          placeholder="Tu nombre"
+          minLength="2"
+          maxLength="40"
+          required
+        />
+        <span className="popup__error-profile-name"></span>
+      </div>
+      <div className="popup__input-container">
+        <input
+          type="text"
+          name="profile-about"
+          id="profile-about"
+          className="popup__input"
+          placeholder="Sobre ti"
+          minLength="2"
+          maxLength="200"
+          required
+        />
+        <span className="popup__error-profile-about"></span>
+      </div>
+    </>
+  ),
 };
 
-const userInfoConfig = {
-  name: profileName,
-  about: profileAbout,
-  avatar: profileAvatar,
+const editAvatarProps = {
+  name: "popup__edit-avatar",
+  title: "Cambiar Foto de Perfil",
+  submit: "Guardar",
+  inputs: (
+    <>
+      <div className="popup__input-container">
+        <input
+          type="url"
+          name="profile-avatar"
+          id="profile-avatar"
+          className="popup__input"
+          placeholder="Enlace a imagen"
+          required
+        />
+        <span className="popup__error-profile-avatar"></span>
+      </div>
+    </>
+  ),
 };
 
-export {
-  addBtn,
-  editBtn,
-  avatarBtn,
-  profileName,
-  profileAbout,
-  cardsContainerSelector,
-  cardTemplate,
-  formList,
-  deleteCardSelector,
-  imagePopupSelector,
-  addFormSelector,
-  editFormSelector,
-  avatarFormSelector,
-  placeName,
-  placeLink,
-  formName,
-  formAbout,
-  cardSelectors,
-  validationConfig,
-  apiConfig,
-  userInfoConfig,
-};
+export { deleteCardProps, addPlaceProps, editProfileProps, editAvatarProps };
