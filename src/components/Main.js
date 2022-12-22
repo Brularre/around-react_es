@@ -1,28 +1,17 @@
 import avatarPlaceholder from "../images/profile_avatar_placeholder.jpg";
-import cardPlaceholder from "../images/elements_image_placeholder.svg";
 
-export default function Main() {
-  function handleEditAvatarClick() {
-    document.querySelector("#popup__edit-avatar").classList.add("popup_active");
-  }
-
-  function handleEditProfileClick() {
-    document
-      .querySelector("#popup__edit-profile")
-      .classList.add("popup_active");
-  }
-
-  function handleAddPlaceClick() {
-    document.querySelector("#popup__add-form").classList.add("popup_active");
-  }
-
+export default function Main({
+  onAddPlaceClick,
+  onEditProfileClick,
+  onEditAvatarClick,
+}) {
   return (
     <>
       <section className="profile">
         <div className="profile__avatar-wrapper">
           <div className="profile__avatar-overlay">
             <div
-              onClick={handleEditAvatarClick}
+              onClick={onEditAvatarClick}
               className="profile__avatar-edit-icon"
             ></div>
           </div>
@@ -37,7 +26,7 @@ export default function Main() {
             <h1 className="profile__name">Loading...</h1>
             <button
               type="button"
-              onClick={handleEditProfileClick}
+              onClick={onEditProfileClick}
               className="profile__edit-btn"
             ></button>
           </span>
@@ -45,21 +34,11 @@ export default function Main() {
         </div>
         <button
           type="button"
-          onClick={handleAddPlaceClick}
+          onClick={onAddPlaceClick}
           className="profile__add-btn"
         ></button>
       </section>
       <main className="elements"></main>
-
-      <div className="popup" id="popup__image">
-        <button type="button" className="popup__close-btn"></button>
-        <img
-          src={cardPlaceholder}
-          alt="Imagen del popup"
-          className="popup__image"
-        />
-        <h3 className="popup__image-caption">Título del popup</h3>
-      </div>
     </>
   );
 }

@@ -1,7 +1,18 @@
-export default function PopupWithForm({ name, title, inputs, submit }) {
+export default function PopupWithForm({
+  name,
+  title,
+  inputs,
+  submit,
+  isOpen = false,
+}) {
   return (
-    <div className="popup" id={name}>
-      <form className="popup__form" name={name} noValidate>
+    <div className={`popup ${isOpen ? "popup_active" : ""}`} id={name}>
+      <form
+        // className={`popup__form`}
+        className="popup__form"
+        name={name}
+        noValidate
+      >
         <button type="button" className="popup__close-btn"></button>
         <h2 className="popup__form-title">{title}</h2>
         {inputs}
