@@ -16,10 +16,17 @@ import {
 } from "../utils/constants.js";
 
 function App() {
+  const [selectedCard, setSelectedCard] = useState("");
+  const [isCardPopupOpen, setCardPopupOpen] = useState(false);
   const [isDeleteCardOpen, openDeleteCard] = useState(false);
   const [isAddPlaceOpen, openAddPlace] = useState(false);
   const [isEditProfileOpen, openEditProfile] = useState(false);
   const [isAvatarOpen, openEditAvatar] = useState(false);
+
+  const handleCardClick = (cardData) => {
+    setSelectedCard(cardData);
+    setCardPopupOpen(true);
+  };
 
   const openDeleteCardPopup = () => {
     openDeleteCard(true);
@@ -34,22 +41,52 @@ function App() {
     openEditAvatar(true);
   };
 
+  const closeAllPopups = () => {
+    setSelectedCard("");
+    setCardPopupOpen(false);
+    openDeleteCard(false);
+    openAddPlace(false);
+    openEditProfile(false);
+    openEditAvatar(false);
+  };
+
   return (
     <>
       <div>
         <Header />
         <Main
+          onCardClick={handleCardClick}
           onDeleteCardClick={openDeleteCardPopup}
           onAddPlaceClick={openAddPlacePopup}
           onEditProfileClick={openEditProfilePopup}
           onEditAvatarClick={openAvatarPopup}
         />
         <Footer />
-        <ImagePopup />
-        <PopupWithForm {...deleteCardProps} isOpen={isDeleteCardOpen} />
-        <PopupWithForm {...addPlaceProps} isOpen={isAddPlaceOpen} />
-        <PopupWithForm {...editProfileProps} isOpen={isEditProfileOpen} />
-        <PopupWithForm {...editAvatarProps} isOpen={isAvatarOpen} />
+        <ImagePopup
+          isOpen={isCardPopupOpen}
+          onClose={closeAllPopups}
+          card={selectedCard}
+        />
+        <PopupWithForm
+          {...deleteCardProps}
+          isOpen={isDeleteCardOpen}
+          onClose={closeAllPopups}
+        />
+        <PopupWithForm
+          {...addPlaceProps}
+          isOpen={isAddPlaceOpen}
+          onClose={closeAllPopups}
+        />
+        <PopupWithForm
+          {...editProfileProps}
+          isOpen={isEditProfileOpen}
+          onClose={closeAllPopups}
+        />
+        <PopupWithForm
+          {...editAvatarProps}
+          isOpen={isAvatarOpen}
+          onClose={closeAllPopups}
+        />
       </div>
     </>
   );

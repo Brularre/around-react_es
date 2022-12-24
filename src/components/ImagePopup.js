@@ -1,15 +1,17 @@
-import cardPlaceholder from "../images/elements_image_placeholder.svg";
-
-export default function ImagePopup() {
+export default function ImagePopup({ card, isOpen, onClose }) {
   return (
-    <div className="popup" id="popup__image">
-      <button type="button" className="popup__close-btn"></button>
+    <div className={`popup ${isOpen ? "popup_active" : ""}`} id="popup__image">
+      <button
+        type="button"
+        className="popup__close-btn"
+        onClick={onClose}
+      ></button>
       <img
-        src={cardPlaceholder}
-        alt="Imagen del popup"
+        src={card.link}
+        alt={`Imagen de ${card.name}`}
         className="popup__image"
       />
-      <h3 className="popup__image-caption">Título del popup</h3>
+      <h3 className="popup__image-caption">{card.name}</h3>
     </div>
   );
 }

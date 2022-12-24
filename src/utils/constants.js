@@ -1,5 +1,3 @@
-/* MARKUP SELECTORS */
-
 /* PROPS OBJECTS */
 
 const deleteCardProps = {

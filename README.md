@@ -1,12 +1,12 @@
 <div id="#inicio"></div>
 
-# Alrededor de Estados Unidos - Proyecto Cuarto a Décimo Sprint de Practicum por <a href="https://github.com/brularre/">Bruno Larraín</a>
+# Alrededor de Estados Unidos - Edición React- Proyecto Décimo Sprint de Practicum por <a href="https://github.com/brularre/">Bruno Larraín</a>
 
 ## Sobre el Proyecto
 
-¡Hola! Si estás leyendo esto, estás revisando y/o visitando mi portafolio para ver mi trabajo. Sigue mi progreso en el Curso de Desarrollo Web de Practicum, este es el cuarto proyecto desarrollado para Practicum, siendo al momento de escribir la sexta iteración y noveno sprint del curso. Acá incorporamos el uso de una pequeña API y una interacción con un servidor designado para nosotros para poder hacer cambios server-side.
+¡Hola! Si estás leyendo esto, estás revisando y/o visitando mi portafolio para ver mi trabajo. Sigue mi progreso en el Curso de Desarrollo Web de Practicum, este es el decimo sprint desarrollado para Practicum, siendo al momento de escribir la séptima iteración del curso. Acá incorporamos el uso de React básico a un proyecto que ya veníamos construyendo.
 
-En esta iteración se agregaron cambios para extraer y editar información del usuario (datos y avatar), cargar, agregar y borrar tarjetas, además de mostrar, agregar y remover likes desde el servidor mediante el comando Fetch y los métodos GET, POST, PATCH, PUT y DELETE.
+En esta iteración se trasladaron las piezas básicas del Proyecto a JSX y se activaron los popups.
 
 ## Tecnologías usadas
 
@@ -16,9 +16,12 @@ En esta iteración se agregaron cambios para extraer y editar información del u
 - [Webpack](https://webpack.js.org/)
 - [Babel](https://babeljs.io/)
 - [PostCSS](https://postcss.org/)
+- [React](https://reactjs.org/)
 
 ## Versiones
 
+4.1 - Feat: Agrega Popups y se entrega para revisión.
+4.0 - Feat: Agrega esqueleto básico en React
 3.8 - Feat: Agrega ciertos cambios para QoL.
 3.7 - Feat: Agrega funcionalidad de likes server-side.
 3.6 - Feat: Agrega funcionalidad para borrar las tarjetas del usuario actual del servidor.
