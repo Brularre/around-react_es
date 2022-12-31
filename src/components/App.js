@@ -1,12 +1,16 @@
 // import logo from './logo.svg';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../pages/index.css";
+
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup.js";
+
+import { api } from "../utils/api.js";
 
 import {
   deleteCardProps,
@@ -16,12 +20,17 @@ import {
 } from "../utils/constants.js";
 
 function App() {
+  const [currentUser, setCurrentUser] = useState("");
   const [selectedCard, setSelectedCard] = useState("");
   const [isCardPopupOpen, setCardPopupOpen] = useState(false);
   const [isDeleteCardOpen, openDeleteCard] = useState(false);
   const [isAddPlaceOpen, openAddPlace] = useState(false);
   const [isEditProfileOpen, openEditProfile] = useState(false);
   const [isAvatarOpen, openEditAvatar] = useState(false);
+
+  useEffect(() => {
+    api.getUser().then((res) => setCurrentUser(res));
+  }, [setCurrentUser]);
 
   const handleCardClick = (cardData) => {
     setSelectedCard(cardData);
@@ -54,39 +63,41 @@ function App() {
     <>
       <div>
         <Header />
-        <Main
-          onCardClick={handleCardClick}
-          onDeleteCardClick={openDeleteCardPopup}
-          onAddPlaceClick={openAddPlacePopup}
-          onEditProfileClick={openEditProfilePopup}
-          onEditAvatarClick={openAvatarPopup}
-        />
+        <CurrentUserContext.Provider value={currentUser}>
+          <Main
+            onCardClick={handleCardClick}
+            onDeleteCardClick={openDeleteCardPopup}
+            onAddPlaceClick={openAddPlacePopup}
+            onEditProfileClick={openEditProfilePopup}
+            onEditAvatarClick={openAvatarPopup}
+          />
+          <ImagePopup
+            isOpen={isCardPopupOpen}
+            onClose={closeAllPopups}
+            card={selectedCard}
+          />
+          <PopupWithForm
+            {...deleteCardProps}
+            isOpen={isDeleteCardOpen}
+            onClose={closeAllPopups}
+          />
+          <PopupWithForm
+            {...addPlaceProps}
+            isOpen={isAddPlaceOpen}
+            onClose={closeAllPopups}
+          />
+          <PopupWithForm
+            {...editProfileProps}
+            isOpen={isEditProfileOpen}
+            onClose={closeAllPopups}
+          />
+          <PopupWithForm
+            {...editAvatarProps}
+            isOpen={isAvatarOpen}
+            onClose={closeAllPopups}
+          />
+        </CurrentUserContext.Provider>
         <Footer />
-        <ImagePopup
-          isOpen={isCardPopupOpen}
-          onClose={closeAllPopups}
-          card={selectedCard}
-        />
-        <PopupWithForm
-          {...deleteCardProps}
-          isOpen={isDeleteCardOpen}
-          onClose={closeAllPopups}
-        />
-        <PopupWithForm
-          {...addPlaceProps}
-          isOpen={isAddPlaceOpen}
-          onClose={closeAllPopups}
-        />
-        <PopupWithForm
-          {...editProfileProps}
-          isOpen={isEditProfileOpen}
-          onClose={closeAllPopups}
-        />
-        <PopupWithForm
-          {...editAvatarProps}
-          isOpen={isAvatarOpen}
-          onClose={closeAllPopups}
-        />
       </div>
     </>
   );

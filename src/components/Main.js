@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Card from "./Card.js";
 import avatarPlaceholder from "../images/profile_avatar_placeholder.jpg";
 import { api } from "../utils/api.js";
+
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 export default function Main({
   onCardClick,
@@ -14,17 +16,17 @@ export default function Main({
   const [userAbout, setAbout] = useState("Please Wait");
   const [userAvatar, setAvatar] = useState(avatarPlaceholder);
 
+  const { name, about, avatar } = useContext(CurrentUserContext);
+
   useEffect(() => {
-    api.getUser().then(({ name, about, avatar }) => {
-      setUserName(name);
-      setAbout(about);
-      setAvatar(avatar);
-    });
-  }, []);
+    setUserName(name);
+    setAbout(about);
+    setAvatar(avatar);
+  }, [name, about, avatar]);
 
   useEffect(() => {
     api.getCards().then((cardList) => setCards(cardList));
-  }, []);
+  }, [cards]);
 
   return (
     <>
