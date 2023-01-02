@@ -2,7 +2,12 @@ import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import cardImagePlaceholder from "../images/elements_image_placeholder.svg";
 
-export default function Card({ cardData, onCardClick }) {
+export default function Card({
+  cardData,
+  onCardClick,
+  onCardLike,
+  onCardDelete,
+}) {
   const currentUser = useContext(CurrentUserContext);
 
   const isOwn = cardData.owner._id === currentUser._id;
@@ -20,9 +25,21 @@ export default function Card({ cardData, onCardClick }) {
     onCardClick(cardData);
   }
 
+  function handleLikeClick() {
+    onCardLike(cardData);
+  }
+
+  function handleCardDelete() {
+    onCardDelete(cardData);
+  }
+
   return (
     <div className="elements__card">
-      <button type="button" className={cardDeleteButtonClassName}></button>
+      <button
+        type="button"
+        className={cardDeleteButtonClassName}
+        onClick={handleCardDelete}
+      ></button>
       <img
         onError={({ currentTarget }) => {
           currentTarget.onError = null;
@@ -36,7 +53,11 @@ export default function Card({ cardData, onCardClick }) {
       <div className="elements__name-box">
         <h2 className="elements__name">{cardData.name}</h2>
         <div className="elements__like-box">
-          <button type="submit" className={likeButtonClassName}></button>
+          <button
+            type="submit"
+            onClick={handleLikeClick}
+            className={likeButtonClassName}
+          ></button>
           <div className="elements__like-number">{cardData.likes.length}</div>
         </div>
       </div>

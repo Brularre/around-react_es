@@ -1,32 +1,29 @@
 import { useEffect, useState, useContext } from "react";
 import Card from "./Card.js";
 import avatarPlaceholder from "../images/profile_avatar_placeholder.jpg";
-import { api } from "../utils/api.js";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
 export default function Main({
+  cards,
   onCardClick,
+  onCardLike,
+  onDeleteCardClick,
   onAddPlaceClick,
   onEditProfileClick,
   onEditAvatarClick,
 }) {
-  const [cards, setCards] = useState([]);
   const [userName, setUserName] = useState("Loading...");
   const [userAbout, setAbout] = useState("Please Wait");
   const [userAvatar, setAvatar] = useState(avatarPlaceholder);
 
-  const { name, about, avatar } = useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
-    setUserName(name);
-    setAbout(about);
-    setAvatar(avatar);
-  }, [name, about, avatar]);
-
-  useEffect(() => {
-    api.getCards().then((cardList) => setCards(cardList));
-  }, [cards]);
+    setUserName(currentUser.name);
+    setAbout(currentUser.about);
+    setAvatar(currentUser.avatar);
+  }, [currentUser]);
 
   return (
     <>
@@ -63,7 +60,13 @@ export default function Main({
       </section>
       <main className="elements">
         {cards.map((card) => (
-          <Card cardData={card} key={card._id} onCardClick={onCardClick} />
+          <Card
+            cardData={card}
+            key={card._id}
+            onCardClick={onCardClick}
+            onCardLike={onCardLike}
+            onCardDelete={onDeleteCardClick}
+          />
         ))}
       </main>
     </>
