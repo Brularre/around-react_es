@@ -4,9 +4,9 @@
 
 ## Sobre el Proyecto
 
-¡Hola! Si estás leyendo esto, estás revisando y/o visitando mi portafolio para ver mi trabajo. Sigue mi progreso en el Curso de Desarrollo Web de Practicum, este es el decimo sprint desarrollado para Practicum, siendo al momento de escribir la séptima iteración del curso. Acá incorporamos el uso de React básico a un proyecto que ya veníamos construyendo.
+¡Hola! Si estás leyendo esto, estás revisando y/o visitando mi portafolio para ver mi trabajo. Sigue mi progreso en el Curso de Desarrollo Web de Practicum, este es el undécimo sprint desarrollado para Practicum. Acá incorporamos el uso de React más avanzado al proyecto que continuamos construyendo.
 
-En esta iteración se trasladaron las piezas básicas del Proyecto a JSX y se activaron los popups.
+En esta iteración se avanza en la implementación de la api, las funcionalidades de los popups y el uso de contextos.
 
 ## Tecnologías usadas
 
@@ -20,6 +20,9 @@ En esta iteración se trasladaron las piezas básicas del Proyecto a JSX y se ac
 
 ## Versiones
 
+5.2 - Feat: Refactoriza formularios para edición de perfil, agregar tarjetas, editar el avatar y borrar tarjetas.
+5.1 - Feat: Agrega like y eliminación de cards.
+5.0 - Feat: Implementa un contexto para el usuario actual.
 4.1 - Feat: Agrega Popups y se entrega para revisión.
 4.0 - Feat: Agrega esqueleto básico en React
 3.8 - Feat: Agrega ciertos cambios para QoL.
