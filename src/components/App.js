@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import { useState, useEffect } from "react";
-import "../pages/index.css";
+import "../index.css";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
@@ -13,7 +13,7 @@ import EditAvatarPopup from "./EditAvatarPopup.js";
 import DeleteCardPopup from "./DeleteCardPopup.js";
 import ImagePopup from "./ImagePopup.js";
 
-import { api } from "../utils/api.js";
+import api from "../utils/api.js";
 
 function App() {
   const [currentUser, setCurrentUser] = useState("");
