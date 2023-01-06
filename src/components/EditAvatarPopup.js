@@ -1,23 +1,18 @@
-import { useState, useContext, useEffect, useRef } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
+import { useRef } from "react";
 
-export default function EditProfilePopup({ isOpen, onClose, onUpdateAvatar }) {
-  const currentUser = useContext(CurrentUserContext);
-  const [avatar, setAvatar] = useState("");
+export default function EditAvatarPopup({
+  isOpen,
+  onClose,
+  avatar,
+  onUpdateAvatar,
+  onAvatarChange,
+}) {
   const inputRef = useRef(avatar);
-
-  function handleAvatarChange(evt) {
-    setAvatar(evt.target.value);
-  }
 
   function handleSubmit(evt) {
     evt.preventDefault();
     onUpdateAvatar(inputRef.current.value);
   }
-
-  useEffect(() => {
-    setAvatar(currentUser.avatar);
-  }, [currentUser]);
 
   return (
     <div
@@ -45,7 +40,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateAvatar }) {
             placeholder="Enlace a imagen"
             required
             ref={inputRef}
-            onChange={handleAvatarChange}
+            onChange={onAvatarChange}
           />
           <span className="popup__error-profile-avatar"></span>
         </div>

@@ -32,7 +32,6 @@ class Api {
 
   async setAvatar(avatar) {
     try {
-      console.log(avatar);
       return await fetch(`${this._address}/users/me/avatar`, {
         method: "PATCH",
         body: JSON.stringify({

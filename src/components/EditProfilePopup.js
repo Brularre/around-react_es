@@ -1,29 +1,12 @@
-import { useState, useContext, useEffect } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
-
-export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
-  const currentUser = useContext(CurrentUserContext);
-  const [name, setName] = useState("");
-  const [about, setAbout] = useState("");
-
-  function handleNameChange(evt) {
-    setName(evt.target.value);
-  }
-
-  function handleAboutChange(evt) {
-    setAbout(evt.target.value);
-  }
-
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    onUpdateUser({ name, about });
-  }
-
-  useEffect(() => {
-    setName(currentUser.name);
-    setAbout(currentUser.about);
-  }, [currentUser]);
-
+export default function EditProfilePopup({
+  isOpen,
+  onClose,
+  onUpdateUser,
+  onNameChange,
+  onAboutChange,
+  name,
+  about,
+}) {
   return (
     <div
       className={`popup ${isOpen ? "popup_active" : ""}`}
@@ -32,7 +15,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       <form
         className="popup__form"
         name="popup__edit-profile"
-        onSubmit={handleSubmit}
+        onSubmit={onUpdateUser}
         noValidate
       >
         <button
@@ -51,7 +34,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             minLength="2"
             maxLength="40"
             required
-            onChange={handleNameChange}
+            onChange={onNameChange}
             value={name || ""}
           />
           <span className="popup__error-profile-name"></span>
@@ -66,7 +49,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             minLength="2"
             maxLength="200"
             required
-            onChange={handleAboutChange}
+            onChange={onAboutChange}
             value={about || ""}
           />
           <span className="popup__error-profile-about"></span>

@@ -1,6 +1,5 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import Card from "./Card.js";
-import avatarPlaceholder from "../images/profile_avatar_placeholder.jpg";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
 
@@ -13,17 +12,7 @@ export default function Main({
   onEditProfileClick,
   onEditAvatarClick,
 }) {
-  const [userName, setUserName] = useState("Loading...");
-  const [userAbout, setAbout] = useState("Please Wait");
-  const [userAvatar, setAvatar] = useState(avatarPlaceholder);
-
   const currentUser = useContext(CurrentUserContext);
-
-  useEffect(() => {
-    setUserName(currentUser.name);
-    setAbout(currentUser.about);
-    setAvatar(currentUser.avatar);
-  }, [currentUser]);
 
   return (
     <>
@@ -36,21 +25,21 @@ export default function Main({
             ></div>
           </div>
           <img
-            src={userAvatar}
+            src={currentUser.avatar}
             alt="Imagen de perfil del usuario"
             className="profile__avatar"
           />
         </div>
         <div className="profile__info">
           <span>
-            <h1 className="profile__name">{userName}</h1>
+            <h1 className="profile__name">{currentUser.name}</h1>
             <button
               type="button"
               onClick={onEditProfileClick}
               className="profile__edit-btn"
             ></button>
           </span>
-          <p className="profile__about">{userAbout}</p>
+          <p className="profile__about">{currentUser.about}</p>
         </div>
         <button
           type="button"

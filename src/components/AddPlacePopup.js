@@ -1,22 +1,10 @@
-import { useState } from "react";
-
-export default function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
-  const [place, setPlace] = useState("");
-  const [link, setLink] = useState("");
-
-  function handlePlaceChange(evt) {
-    setPlace(evt.target.value);
-  }
-
-  function handleLinkChange(evt) {
-    setLink(evt.target.value);
-  }
-
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    onAddPlaceSubmit(place, link);
-  }
-
+export default function AddPlacePopup({
+  isOpen,
+  onClose,
+  onAddPlaceSubmit,
+  onPlaceChange,
+  onLinkChange,
+}) {
   return (
     <div
       className={`popup ${isOpen ? "popup_active" : ""}`}
@@ -25,7 +13,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
       <form
         className="popup__form"
         name="popup__add-form"
-        onSubmit={handleSubmit}
+        onSubmit={onAddPlaceSubmit}
         noValidate
       >
         <button
@@ -44,8 +32,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
             minLength="2"
             maxLength="30"
             required
-            onChange={handlePlaceChange}
-            value={place}
+            onChange={onPlaceChange}
           />
           <span className="popup__error-place-name"></span>
         </div>
@@ -57,8 +44,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
             className="popup__input"
             placeholder="Enlace a la imagen"
             required
-            onChange={handleLinkChange}
-            value={link}
+            onChange={onLinkChange}
           />
           <span className="popup__error-place-link"></span>
         </div>
