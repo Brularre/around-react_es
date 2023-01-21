@@ -1,25 +1,35 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import * as auth from "../auth.js";
+import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import * as auth from "../utils/auth";
 
 function Login({ setIsLoggedIn }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const history = useHistory();
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+  });
+
+  function handleChange(evt) {
+    const { name, value } = evt.target;
+    setValues({ ...values, [name]: value });
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!email || !password) {
-      // handle invalid entries appropriately
+    if (!values) {
       return;
     }
     auth
-      .authorize(email, password)
-      .then((res) => {
-        console.log(res);
-        setIsLoggedIn(true);
+      .authorize(values)
+      .then((data) => {
+        if (data.jwt) {
+          setValues({ email: values.email, password: values.password });
+        }
       })
-      .catch(console.log);
+      .then((res) => history.push("/"))
+      .catch((err) => console.log(err));
   };
+
   return (
     <div className="form">
       <h2 className="form__title">Iniciar Sesión</h2>
@@ -39,10 +49,9 @@ function Login({ setIsLoggedIn }) {
             minLength="2"
             maxLength="40"
             required
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
+            onChange={handleChange}
+            value={values.email}
           />
-          {/* <span className="form__error-email"></span> */}
           <input
             type="password"
             name="password"
@@ -52,10 +61,9 @@ function Login({ setIsLoggedIn }) {
             minLength="2"
             maxLength="12"
             required
-            value={password || ""}
-            onChange={(e) => setPassword(e.target.value)}
+            value={values.password}
+            onChange={handleChange}
           />
-          {/* <span className="form__error-password"></span> */}
         </div>
         <div className="form__button-container">
           <button type="submit" className="form__button">

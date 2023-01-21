@@ -1,26 +1,26 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import * as auth from "../auth.js";
+import { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import * as auth from "../utils/auth";
 
 function Register() {
-  // create necessary state variables
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const history = useHistory();
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      /* with our onChange handlers keeping the state up-to-date, the submitted
-        values are already stored in the appropriate variables. */
-      auth
-        .register(username, email, password)
-        // returns { data: { _id: '...', email: '...' } }
-        .then((res) => console.log(res))
-        .catch(console.log);
-    }
+    auth
+      .register(values)
+      .then((res) => history.push("/signin"))
+      .catch((err) => console.log(err));
   };
+
+  function handleChange(evt) {
+    const { name, value } = evt.target;
+    setValues({ ...values, [name]: value });
+  }
 
   return (
     <div className="form">
@@ -41,8 +41,8 @@ function Register() {
             minLength="2"
             maxLength="40"
             required
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
+            onChange={handleChange}
+            value={values.email}
           />
           {/* <span className="form__error-email"></span> */}
           <input
@@ -54,8 +54,8 @@ function Register() {
             minLength="2"
             maxLength="12"
             required
-            value={password || ""}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleChange}
+            value={values.password}
           />
           {/* <span className="form__error-password"></span> */}
         </div>

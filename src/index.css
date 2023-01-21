@@ -32,6 +32,14 @@
 @import url(./blocks/form/__link/form__link.css);
 @import url(./blocks/form/__link/_hover/form__link_hover.css);
 
+/* INFO TOOLTIP */
+
+@import url(./blocks/info-tooltip/info-tooltip.css);
+@import url(./blocks/info-tooltip/_active/info-tooltip_active.css);
+@import url(./blocks/info-tooltip/__close-btn/info-tooltip__close-btn.css);
+@import url(./blocks/info-tooltip/__icon/info-tooltip__icon.css);
+@import url(./blocks/info-tooltip/__text/info-tooltip__text.css);
+
 /* PROFILE */
 
 @import url(./blocks/profile/profile.css);

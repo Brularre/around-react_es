@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 import Header from "./Header";
@@ -7,11 +7,13 @@ import Main from "./Main";
 import Footer from "./Footer";
 import Login from "./Login";
 import Register from "./Register";
+import InfoTooltip from "./InfoTooltip";
 import AddPlacePopup from "./AddPlacePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import DeleteCardPopup from "./DeleteCardPopup";
 import ImagePopup from "./ImagePopup";
+import ProtectedRoute from "./ProtectedRoute";
 import api from "../utils/api";
 import avatarPlaceholder from "../images/profile_avatar_placeholder.jpg";
 import "../index.css";
@@ -116,6 +118,7 @@ function App() {
   const [isAddPlaceOpen, openAddPlace] = useState(false);
   const [isEditProfileOpen, openEditProfile] = useState(false);
   const [isAvatarOpen, openEditAvatar] = useState(false);
+  const [isInfoTooltipOpen, openInfoTooltip] = useState(true);
 
   function openDeleteCardPopup(card) {
     setSelectedCard(card);
@@ -141,11 +144,13 @@ function App() {
     openAddPlace(false);
     openEditProfile(false);
     openEditAvatar(false);
+    openInfoTooltip(false);
   }
 
   return (
     <>
       <Header />
+      <InfoTooltip isOpen={isInfoTooltipOpen} onClose={closeAllPopups} />
       <CurrentUserContext.Provider value={currentUser}>
         <Switch>
           <Route path="/signup">
@@ -154,7 +159,7 @@ function App() {
           <Route path="/signin">
             <Login />
           </Route>
-          <Route path="/">
+          <ProtectedRoute isLoggedIn={isLoggedIn} path="/">
             <Main
               cards={cards}
               onCardClick={handleCardClick}
@@ -198,9 +203,9 @@ function App() {
               onUpdateAvatar={handleUpdateAvatar}
               onAvatarChange={handleAvatarChange}
             />
-          </Route>
+            <Footer />
+          </ProtectedRoute>
         </Switch>
-        <Footer />
       </CurrentUserContext.Provider>
     </>
   );
