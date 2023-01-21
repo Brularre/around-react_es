@@ -1,0 +1,17 @@
+.form__element {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: auto;
+  align-items: center;
+  padding-top: 60px;
+  width: 260px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+@media screen and (min-width: 768px) {
+  .form__element {
+    width: 360px;
+  }
+}

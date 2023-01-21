@@ -20,6 +20,18 @@
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);
 
+/* FORM */
+
+@import url(./blocks/form/form.css);
+@import url(./blocks/form/__element/form__element.css);
+@import url(./blocks/form/__title/form__title.css);
+@import url(./blocks/form/__input-container/form__input-container.css);
+@import url(./blocks/form/__input/form__input.css);
+@import url(./blocks/form/__button/form__button.css);
+@import url(./blocks/form/__button/_hover/form__button_hover.css);
+@import url(./blocks/form/__link/form__link.css);
+@import url(./blocks/form/__link/_hover/form__link_hover.css);
+
 /* PROFILE */
 
 @import url(./blocks/profile/profile.css);

@@ -1,6 +1,6 @@
 <div id="#inicio"></div>
 
-# Alrededor de Estados Unidos - Edición React- Proyecto Décimo Sprint de Practicum por <a href="https://github.com/brularre/">Bruno Larraín</a>
+# Alrededor de Estados Unidos - Edición React- Proyecto Undécimo Sprint de Practicum por <a href="https://github.com/brularre/">Bruno Larraín</a>
 
 ## Sobre el Proyecto
 
@@ -58,6 +58,6 @@ El proyecto se considerará terminado una vez entregado con todas las correccion
 
 Bruno Larraín - [Web Personal](https://www.brularre.com) - contacto@brularre.com
 
-Link Proyecto Link: [https://brularre.github.io/web_project_4_esp/](https://brularre.github.io/web_project_4_esp/)
+Link Proyecto Link: [https://brularre.github.io/around-react_es/](https://brularre.github.io/around-react_es/)
 
 <p align="right">(<a href="#inicio">Volver al inicio</a>)</p>
