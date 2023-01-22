@@ -1,12 +1,12 @@
 <div id="#inicio"></div>
 
-# Alrededor de Estados Unidos - Edición React- Proyecto Undécimo Sprint de Practicum por <a href="https://github.com/brularre/">Bruno Larraín</a>
+# Alrededor de Estados Unidos - Edición React - Proyecto Decimo Cuarto Sprint de Practicum por <a href="https://github.com/brularre/">Bruno Larraín</a>
 
 ## Sobre el Proyecto
 
-¡Hola! Si estás leyendo esto, estás revisando y/o visitando mi portafolio para ver mi trabajo. Sigue mi progreso en el Curso de Desarrollo Web de Practicum, este es el undécimo sprint desarrollado para Practicum. Acá incorporamos el uso de React más avanzado al proyecto que continuamos construyendo.
+¡Hola! Si estás leyendo esto, estás revisando y/o visitando mi portafolio para ver mi trabajo. Sigue mi progreso en el Curso de Desarrollo Web de Practicum, este es el decimo cuarto sprint desarrollado para Practicum. Acá volvemos a React para implementar una identificación, autenticación y autorización en el Frontend.
 
-En esta iteración se avanza en la implementación de la api, las funcionalidades de los popups y el uso de contextos.
+En esta iteración se implementan formularios de inicio de sesión, registro y rutas de navegación protegidas para que sólo usuarios autorizados vean el contenido del sitio.
 
 ## Tecnologías usadas
 
@@ -20,6 +20,7 @@ En esta iteración se avanza en la implementación de la api, las funcionalidade
 
 ## Versiones
 
+6.0 - Feat: Agrega autenticación y autorización a nivel de Frontend.
 5.2 - Feat: Refactoriza formularios para edición de perfil, agregar tarjetas, editar el avatar y borrar tarjetas.
 5.1 - Feat: Agrega like y eliminación de cards.
 5.0 - Feat: Implementa un contexto para el usuario actual.
@@ -56,8 +57,8 @@ El proyecto se considerará terminado una vez entregado con todas las correccion
 
 ## Contact
 
-Bruno Larraín - [Web Personal](https://www.brularre.com) - contacto@brularre.com
+Bruno Larraín - [Github](https://github.com/Brularre/) - contacto@brularre.com
 
-Link Proyecto Link: [https://brularre.github.io/around-react_es/](https://brularre.github.io/around-react_es/)
+Link Proyecto Link: [https://github.com/Brularre/react-around-auth_es](https://github.com/Brularre/react-around-auth_es)
 
 <p align="right">(<a href="#inicio">Volver al inicio</a>)</p>
