@@ -1,0 +1,19 @@
+.navbar__logout {
+  border: none;
+  box-shadow: none;
+  background-color: black;
+  color: #a9a9a9;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  transition: opacity 0.5s;
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .navbar__logout {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}

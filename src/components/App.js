@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { Route, Switch, useHistory } from "react-router-dom";
+import { AppContext } from "../contexts/AppContext";
 
 import Header from "./Header";
 import Main from "./Main";
@@ -15,24 +16,60 @@ import DeleteCardPopup from "./DeleteCardPopup";
 import ImagePopup from "./ImagePopup";
 import ProtectedRoute from "./ProtectedRoute";
 import api from "../utils/api";
+import * as auth from "../utils/auth";
 import avatarPlaceholder from "../images/profile_avatar_placeholder.jpg";
 import "../index.css";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
+  const [userEmail, setUserEmail] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedCard, setSelectedCard] = useState("");
   const [cards, setCards] = useState([]);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const history = useHistory();
 
   // Get Current User and Cards
 
   useEffect(() => {
-    api.getCards().then((cardList) => setCards(cardList));
+    api
+      .getCards()
+      .then((cardList) => setCards(cardList))
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {
-    api.getUser().then((res) => setCurrentUser(res));
+    api.getUser().then((res) => {
+      setCurrentUser({
+        ...currentUser,
+        name: res.name,
+        about: res.about,
+        avatar: res.avatar,
+        id: res._id,
+      });
+    });
   }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("jwt")) {
+      const jwt = localStorage.getItem("jwt");
+      if (jwt) {
+        auth
+          .getAuthorizedUserData(jwt)
+          .then((res) => {
+            if (res) {
+              setUserEmail(res.data.email);
+              setIsLoggedIn(true);
+              history.push("/");
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    }
+  }, [isLoggedIn]);
 
   // Add Place Popup Logic
 
@@ -118,7 +155,7 @@ function App() {
   const [isAddPlaceOpen, openAddPlace] = useState(false);
   const [isEditProfileOpen, openEditProfile] = useState(false);
   const [isAvatarOpen, openEditAvatar] = useState(false);
-  const [isInfoTooltipOpen, openInfoTooltip] = useState(true);
+  const [isInfoTooltipOpen, openInfo] = useState(false);
 
   function openDeleteCardPopup(card) {
     setSelectedCard(card);
@@ -137,6 +174,10 @@ function App() {
     openEditAvatar(true);
   }
 
+  function openInfoTooltip() {
+    openInfo(true);
+  }
+
   function closeAllPopups() {
     setSelectedCard("");
     setCardPopupOpen(false);
@@ -144,20 +185,72 @@ function App() {
     openAddPlace(false);
     openEditProfile(false);
     openEditAvatar(false);
-    openInfoTooltip(false);
+    openInfo(false);
+  }
+
+  // Login, Register and Logout
+
+  function handleLogout() {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    history.push("/login");
+  }
+
+  function handleLogin(userValues) {
+    auth
+      .authorize(userValues)
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem("jwt", data.token);
+          setIsLoggedIn(true);
+          history.push("/");
+        }
+      })
+      .catch((err) => {
+        setIsSuccess(false);
+        openInfoTooltip(true);
+        console.log(err);
+      });
+  }
+
+  function handleRegister(userData) {
+    auth
+      .register(userData)
+      .then((user) => {
+        if (user.data._id) {
+          setIsSuccess(true);
+          history.push("/signin");
+        } else {
+          setIsSuccess(false);
+        }
+      })
+      .catch((err) => {
+        setIsSuccess(false);
+        console.log(err);
+      })
+      .finally(() => {
+        openInfoTooltip(true);
+      });
   }
 
   return (
     <>
-      <Header />
-      <InfoTooltip isOpen={isInfoTooltipOpen} onClose={closeAllPopups} />
-      <CurrentUserContext.Provider value={currentUser}>
+      <AppContext.Provider
+        value={{ currentUser: currentUser, isLogged: isLoggedIn }}
+      >
+        <Header onLogout={handleLogout} userEmail={userEmail} />
+        <InfoTooltip
+          isOpen={isInfoTooltipOpen}
+          onClose={closeAllPopups}
+          isSuccess={isSuccess}
+        />
+
         <Switch>
           <Route path="/signup">
-            <Register />
+            <Register onSubmit={handleRegister} />
           </Route>
           <Route path="/signin">
-            <Login />
+            <Login onSubmit={handleLogin} />
           </Route>
           <ProtectedRoute isLoggedIn={isLoggedIn} path="/">
             <Main
@@ -169,44 +262,44 @@ function App() {
               onEditProfileClick={openEditProfilePopup}
               onEditAvatarClick={openAvatarPopup}
             />
-            <ImagePopup
-              isOpen={isCardPopupOpen}
-              onClose={closeAllPopups}
-              card={selectedCard}
-            />
-            <DeleteCardPopup
-              isOpen={isDeleteCardOpen}
-              onClose={closeAllPopups}
-              card={selectedCard}
-              onCardDeleteSubmit={handleCardDelete}
-            />
-            <AddPlacePopup
-              isOpen={isAddPlaceOpen}
-              onClose={closeAllPopups}
-              onAddPlaceSubmit={handleAddPlace}
-              onPlaceChange={handlePlaceChange}
-              onLinkChange={handleLinkChange}
-            />
-            <EditProfilePopup
-              isOpen={isEditProfileOpen}
-              onClose={closeAllPopups}
-              onUpdateUser={handleUpdateUser}
-              onNameChange={handleNameChange}
-              onAboutChange={handleAboutChange}
-              name={name}
-              about={about}
-            />
-            <EditAvatarPopup
-              isOpen={isAvatarOpen}
-              onClose={closeAllPopups}
-              avatar={avatar}
-              onUpdateAvatar={handleUpdateAvatar}
-              onAvatarChange={handleAvatarChange}
-            />
             <Footer />
           </ProtectedRoute>
         </Switch>
-      </CurrentUserContext.Provider>
+        <ImagePopup
+          isOpen={isCardPopupOpen}
+          onClose={closeAllPopups}
+          card={selectedCard}
+        />
+        <DeleteCardPopup
+          isOpen={isDeleteCardOpen}
+          onClose={closeAllPopups}
+          card={selectedCard}
+          onCardDeleteSubmit={handleCardDelete}
+        />
+        <AddPlacePopup
+          isOpen={isAddPlaceOpen}
+          onClose={closeAllPopups}
+          onAddPlaceSubmit={handleAddPlace}
+          onPlaceChange={handlePlaceChange}
+          onLinkChange={handleLinkChange}
+        />
+        <EditProfilePopup
+          isOpen={isEditProfileOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+          onNameChange={handleNameChange}
+          onAboutChange={handleAboutChange}
+          name={name}
+          about={about}
+        />
+        <EditAvatarPopup
+          isOpen={isAvatarOpen}
+          onClose={closeAllPopups}
+          avatar={avatar}
+          onUpdateAvatar={handleUpdateAvatar}
+          onAvatarChange={handleAvatarChange}
+        />
+      </AppContext.Provider>
     </>
   );
 }

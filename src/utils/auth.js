@@ -1,39 +1,44 @@
-const BASE_URL = "https://api.nomoreparties.co";
+const BASE_URL = "https://register.nomoreparties.co";
 
 export const register = ({ email, password }) => {
-  return fetch(`${BASE_URL}/auth/local/register`, {
+  return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
   })
     .then((res) => res.json())
+    .catch((err) => console.log(err));
+};
+
+export const authorize = ({ email, password }) => {
+  return fetch(`${BASE_URL}/signin`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+  })
+    .then((response) => response.json())
     .then((data) => {
-      if (data.error) {
-        throw new Error(data.error);
-      }
-      console.log(data);
+      localStorage.setItem("jwt", data);
+      return data;
     })
     .catch((err) => console.log(err));
 };
 
-export const authorize = (identifier, password) => {
-  return fetch(`${BASE_URL}/auth/local`, {
-    method: "POST",
+export const getAuthorizedUserData = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
     headers: {
-      Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ identifier, password }),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.user) {
-        localStorage.setItem("jwt", data.jwt);
-        return data;
-      }
-    })
+    .then((res) => res.json())
     .catch((err) => console.log(err));
 };

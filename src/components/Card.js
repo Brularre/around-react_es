@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { AppContext } from "../contexts/AppContext";
 import cardImagePlaceholder from "../images/elements_image_placeholder.svg";
 
 export default function Card({
@@ -8,10 +8,10 @@ export default function Card({
   onCardLike,
   onCardDelete,
 }) {
-  const currentUser = useContext(CurrentUserContext);
+  const value = useContext(AppContext);
 
-  const isOwn = cardData.owner._id === currentUser._id;
-  const isLiked = cardData.likes.some((i) => i._id === currentUser._id);
+  const isOwn = cardData.owner._id === value.currentUser._id;
+  const isLiked = cardData.likes.some((i) => i._id === value.currentUser._id);
 
   const cardDeleteButtonClassName = `${
     !isOwn ? "elements__del-btn_disabled" : "elements__del-btn"

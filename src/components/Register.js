@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import * as auth from "../utils/auth";
+import { Link } from "react-router-dom";
 
-function Register() {
-  const history = useHistory();
+function Register({ onSubmit }) {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -11,10 +9,7 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    auth
-      .register(values)
-      .then((res) => history.push("/signin"))
-      .catch((err) => console.log(err));
+    onSubmit(values);
   };
 
   function handleChange(evt) {

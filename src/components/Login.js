@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import * as auth from "../utils/auth";
+import { Link } from "react-router-dom";
 
-function Login({ setIsLoggedIn }) {
-  const history = useHistory();
+function Login(props) {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -16,18 +14,11 @@ function Login({ setIsLoggedIn }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!values) {
+    if (!values.email || !values.password) {
       return;
     }
-    auth
-      .authorize(values)
-      .then((data) => {
-        if (data.jwt) {
-          setValues({ email: values.email, password: values.password });
-        }
-      })
-      .then((res) => history.push("/"))
-      .catch((err) => console.log(err));
+    props.onSubmit({ email: values.email, password: values.password });
+    setValues({ email: "", password: "" });
   };
 
   return (

@@ -20,6 +20,16 @@
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);
 
+/* NAVBAR */
+
+@import url(./blocks/navbar/navbar.css);
+@import url(./blocks/navbar/__user/navbar__user.css);
+@import url(./blocks/navbar/__item/navbar__item.css);
+@import url(./blocks/navbar/_hover/navbar__item\ _hover.css);
+@import url(./blocks/navbar/_active/navbar__item_active.css);
+@import url(./blocks/navbar/__logout/navbar__logout.css);
+@import url(./blocks/navbar/__logout/_hover/navbar__logout_hover.css);
+
 /* FORM */
 
 @import url(./blocks/form/form.css);

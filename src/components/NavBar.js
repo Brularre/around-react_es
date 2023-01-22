@@ -1,31 +1,31 @@
-import React from "react";
-import { NavLink, useHistory } from "react-router-dom";
-import "./styles/NavBar.css";
+import { useContext } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { AppContext } from "../contexts/AppContext";
 
-function NavBar(props) {
-  const history = useHistory();
-  function signOut() {
-    localStorage.removeItem("jwt");
-    props.handleLogout();
-    history.push("/login");
-  }
-
-  console.log(props);
+function NavBar({ onLogout, userEmail }) {
+  const { isLogged } = useContext(AppContext);
+  const currentPath = useLocation().pathname;
+  const linkPath = currentPath === "/signup" ? "/signin" : "signup";
+  const linkText = currentPath === "/signup" ? "Ingresar" : "Registro";
 
   return (
     <nav className="navbar">
-      <NavLink
-        exact
-        className="navbar__item"
-        activeClassName="navbar__item_active"
-        to="/login"
-      >
-        Ingresar
-      </NavLink>
-
-      <button onClick={signOut} className="menu__item menu__button">
-        Cerrar sesión
-      </button>
+      {!isLogged && (
+        <NavLink
+          exact
+          className="navbar__item"
+          activeClassName="navbar__item_active"
+          to={linkPath}
+        >
+          {linkText}
+        </NavLink>
+      )}
+      {isLogged && <p className="navbar__user">{userEmail}</p>}
+      {isLogged && (
+        <button onClick={onLogout} className="navbar__logout">
+          Cerrar sesión
+        </button>
+      )}
     </nav>
   );
 }
